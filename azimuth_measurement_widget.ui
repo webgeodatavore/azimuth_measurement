@@ -14,7 +14,7 @@
    <string>Measure azimuth</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>12</x>
@@ -35,7 +35,10 @@
       <widget class="QLineEdit" name="geographic_distance"/>
      </item>
      <item row="0" column="2">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="dist_units">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
        <item>
         <property name="text">
          <string>centimeters</string>
