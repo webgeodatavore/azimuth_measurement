@@ -1,15 +1,12 @@
 # coding: utf-8
 from PyQt4.QtCore import Qt, SIGNAL, pyqtSignal
-from qgis.core import (QGis, QgsGeometry,
-                       QgsCoordinateReferenceSystem,
-                       QgsCoordinateTransform)
+from qgis.core import QGis, QgsGeometry, QgsPoint
 from qgis.gui import QgsMapToolEmitPoint, QgsRubberBand
-from gc_geo import *
 
 
 class DrawMonoLineMapTool(QgsMapToolEmitPoint):
 
-    azimuth_calcul = pyqtSignal(float, float, float)
+    azimuth_calcul = pyqtSignal(QgsPoint, QgsPoint)
 
     def __init__(self, canvas):
         self.canvas = canvas
@@ -62,26 +59,16 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
                 ]),
                 None
             )
-            self.result = self.calculate_azimuth()
-            if (self.result is not None and 'distance' in self.result and
-                'reverse_azimuth' in self.result and 'azimuth' in self.result):
-                self.azimuth_calcul.emit(
-                    self.result['distance'],
-                    self.result['reverse_azimuth'],
-                    self.result['azimuth']
-                )
-
-    def calculate_azimuth(self):
-        if (self.startPoint is not None and self.endPoint is not None and self.startPoint != self.endPoint):
-            sp = self.transform_to_epsg_4326(self.startPoint)
-            ep = self.transform_to_epsg_4326(self.endPoint)
-            calculus = great_distance(
-                start_longitude=sp.x(),
-                start_latitude=sp.y(),
-                end_longitude=ep.x(),
-                end_latitude=ep.y()
-            )
-            return calculus
+            if (self.startPoint is not None and self.endPoint is not None and self.startPoint != self.endPoint):
+                self.azimuth_calcul.emit(self.startPoint, self.endPoint)
+            # self.result = self.calculate_azimuth()
+            # if (self.result is not None and 'distance' in self.result and
+            #     'reverse_azimuth' in self.result and 'azimuth' in self.result):
+            #     self.azimuth_calcul.emit(
+            #         self.result['distance'],
+            #         self.result['reverse_azimuth'],
+            #         self.result['azimuth']
+            #     )
 
     def activate(self):
         self.reset()
@@ -92,12 +79,3 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
         self.reset()
         super(DrawMonoLineMapTool, self).deactivate()
         self.emit(SIGNAL("deactivated()"))
-
-    def transform_to_epsg_4326(self, point):
-        if self.canvas.mapRenderer().destinationCrs().authid() != 'EPSG:4326':
-            crs_src = self.canvas.mapRenderer().destinationCrs()
-            crs_dest = QgsCoordinateReferenceSystem(4326)
-            xform = QgsCoordinateTransform(crs_src, crs_dest)
-            return QgsGeometry.fromPoint(xform.transform(point)).asPoint()
-        else:
-            return point
