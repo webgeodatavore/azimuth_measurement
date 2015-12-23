@@ -13,10 +13,11 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
         QgsMapToolEmitPoint.__init__(self, self.canvas)
         self.rubberBand = QgsRubberBand(self.canvas, QGis.Line)
         self.rubberBandDraw = QgsRubberBand(self.canvas, QGis.Line)
-        self.rubberBandDraw.setColor(Qt.blue)
+        self.rubberBandDraw.setColor(Qt.black)
         self.rubberBandDraw.setWidth(1)
-        self.rubberBand.setColor(Qt.red)
+        self.rubberBand.setColor(Qt.black)
         self.rubberBand.setWidth(1)
+        self.rubberBand.setLineStyle(Qt.DashLine)
         self.points = []
         self.reset()
 
@@ -61,14 +62,6 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
             )
             if (self.startPoint is not None and self.endPoint is not None and self.startPoint != self.endPoint):
                 self.azimuth_calcul.emit(self.startPoint, self.endPoint)
-            # self.result = self.calculate_azimuth()
-            # if (self.result is not None and 'distance' in self.result and
-            #     'reverse_azimuth' in self.result and 'azimuth' in self.result):
-            #     self.azimuth_calcul.emit(
-            #         self.result['distance'],
-            #         self.result['reverse_azimuth'],
-            #         self.result['azimuth']
-            #     )
 
     def activate(self):
         self.reset()
