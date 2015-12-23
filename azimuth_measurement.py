@@ -23,7 +23,7 @@
 from PyQt4.QtCore import (QSettings, Qt, QTranslator, qVersion,
                           QCoreApplication)
 
-from PyQt4.QtGui import QAction, QIcon
+from PyQt4.QtGui import QAction, QIcon, QWidgetAction
 # Initialize Qt resources from file resources.py
 import resources
 
@@ -115,16 +115,24 @@ class AzimuthMeasurement:
             self.iface.mainWindow()
         )
         action.triggered.connect(self.run)
-        self.iface.attributesToolBar().actions()[8].defaultWidget().addAction(
-            action
-        )
+
+        for act in self.iface.attributesToolBar().actions():
+            if isinstance(act, QWidgetAction):
+                if act.defaultWidget().actions()[0] == self.iface.actionMeasure():
+                    act.defaultWidget().addAction(
+                        action
+                    )
         self.actions.append(action)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         self.clear_canvas()
-        widget_measurement = self.iface.attributesToolBar().actions()[8]
-        widget_measurement.defaultWidget().removeAction(self.actions[0])
+        for act in self.iface.attributesToolBar().actions():
+            if isinstance(act, QWidgetAction):
+                if act.defaultWidget().actions()[0] == self.iface.actionMeasure():
+                    act.defaultWidget().removeAction(
+                        self.actions[0]
+                    )
 
     def run(self):
         """Run method that performs all the real work"""
