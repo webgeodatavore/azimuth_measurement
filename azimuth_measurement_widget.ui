@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
+    <width>387</width>
     <height>195</height>
    </rect>
   </property>
@@ -14,20 +14,24 @@
    <string>Measure azimuth</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>10</y>
-      <width>434</width>
-      <height>128</height>
+      <x>13</x>
+      <y>11</y>
+      <width>361</width>
+      <height>142</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label_geographic_distance">
        <property name="text">
-        <string>Geographic distance</string>
+        <string>Geographic
+distance</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -59,17 +63,25 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_azimuth">
        <property name="text">
-        <string>Azimuth (degrees)</string>
+        <string>Azimuth
+(degrees)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="azimuth"/>
      </item>
-     <item row="2" column="0">
+     <item row="2" column="0" rowspan="2">
       <widget class="QLabel" name="label_reverse_azimuth">
        <property name="text">
-        <string>Reverse Azimuth (degrees)</string>
+        <string>Reverse Azimuth 
+(degrees)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
