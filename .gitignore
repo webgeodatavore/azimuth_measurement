@@ -1,2 +1,4 @@
 *.pyc
 *~
+help/build/
+AzimuthMeasurement.zip
