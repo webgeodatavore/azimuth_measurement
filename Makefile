@@ -26,7 +26,7 @@
 #Add iso code for any locales you want to support here (space separated)
 # default is no locales
 # LOCALES = af
-LOCALES =
+LOCALES = fr
 
 # If locales are enabled, set the name of the lrelease binary on your system. If
 # you have trouble compiling the translations, you may have to specify the full path to
@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	azimuth_measurement.py azimuth_measurement_dialog.py
+	azimuth_measurement.py
 
 PLUGINNAME = AzimuthMeasurement
 
 PY_FILES = \
 	__init__.py \
-	azimuth_measurement.py azimuth_measurement_dialog.py
+	azimuth_measurement.py azimuth_measurement_widget.py draw_mono_line_map_tool.py gc_geo.py
 
-UI_FILES = azimuth_measurement_dialog_base.ui
+UI_FILES = azimuth_measurement_widget.ui
 
 EXTRAS = metadata.txt icon.png
 
