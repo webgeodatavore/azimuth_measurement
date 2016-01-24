@@ -1,5 +1,6 @@
 # coding: utf-8
-from PyQt4.QtCore import Qt, SIGNAL, pyqtSignal
+from PyQt4.QtCore import SIGNAL, pyqtSignal, QSettings
+from PyQt4.QtGui import QColor
 from qgis.core import QGis, QgsGeometry, QgsPoint
 from qgis.gui import QgsMapToolEmitPoint, QgsRubberBand
 
@@ -10,14 +11,22 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
 
     def __init__(self, canvas):
         self.canvas = canvas
+        s = QSettings()
+        s.beginGroup('Qgis')
+        color = QColor(
+            int(s.value('default_measure_color_red')),
+            int(s.value('default_measure_color_green')),
+            int(s.value('default_measure_color_blue'))
+        )
+        s.endGroup()
         QgsMapToolEmitPoint.__init__(self, self.canvas)
         self.rubberBand = QgsRubberBand(self.canvas, QGis.Line)
         self.rubberBandDraw = QgsRubberBand(self.canvas, QGis.Line)
-        self.rubberBandDraw.setColor(Qt.black)
+        self.rubberBandDraw.setColor(color)
         self.rubberBandDraw.setWidth(1)
-        self.rubberBand.setColor(Qt.black)
+        self.rubberBand.setColor(color)
         self.rubberBand.setWidth(1)
-        self.rubberBand.setLineStyle(Qt.DashLine)
+        # self.rubberBand.setLineStyle(Qt.DashLine)
         self.points = []
         self.reset()
 

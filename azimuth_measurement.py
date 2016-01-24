@@ -150,26 +150,22 @@ class AzimuthMeasurement:
         """Fill the fields in the dock"""
         result = self.calculate_azimuth(start_point, end_point)
         if (result is not None and 'distance' in result and
-            'reverse_azimuth' in result and 'azimuth' in result):
+            'azimuth' in result):
             self.distance = result['distance']
             self.azimuth = result['azimuth']
-            self.reverse_azimuth = result['reverse_azimuth']
             precision = "{0:.2f}"
             self.set_widget_content(
                 precision.format(self.distance * self.ratio),
-                precision.format(self.azimuth),
-                precision.format(self.reverse_azimuth)
+                precision.format(self.azimuth)
             )
         else:
             self.distance = ""
             self.azimuth = ""
-            self.reverse_azimuth = ""
             self.set_widget_content()
 
-    def set_widget_content(self, distance="", azimuth="", reverse_azimuth=""):
+    def set_widget_content(self, distance="", azimuth=""):
         self.dock.geographic_distance.setText(distance)
         self.dock.azimuth.setText(azimuth)
-        self.dock.reverse_azimuth.setText(reverse_azimuth)
 
     def clear_canvas(self):
         self.draw_mono_line.reset()
@@ -181,7 +177,6 @@ class AzimuthMeasurement:
     def calculate_azimuth(self, start_point, end_point):
             sp = self.transform_to_epsg_4326(start_point)
             ep = self.transform_to_epsg_4326(end_point)
-            print sp.x(), sp.y(), ep.x(), ep.y()
             calculus = great_distance(
                 start_longitude=sp.x(),
                 start_latitude=sp.y(),
@@ -189,7 +184,6 @@ class AzimuthMeasurement:
                 end_latitude=ep.y()
             )
             return calculus
-            # great_distance(start_latitude=2.40, start_longitude=51.08, end_latitude=3.23, end_longitude=42.45)
 
     def transform_to_epsg_4326(self, point):
         if self.canvas.mapRenderer().destinationCrs().authid() != 'EPSG:4326':
