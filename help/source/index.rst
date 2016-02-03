@@ -20,7 +20,7 @@ We only choose to display information in a widget instead of a dialog.
     :align: center
     :alt: Azimuth in Google Earth
 
-You just want to draw a temporary start point, draw a end point and then display the resulting distance and azimuth.
+We just want to draw a temporary start point, draw a end point and then display the resulting distance and azimuth.
 At the moment, we don't give the option to save the line drawing.
 
 Installation
