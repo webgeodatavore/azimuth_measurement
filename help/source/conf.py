@@ -214,3 +214,9 @@ man_pages = [
     ('index', 'TemplateClass', u'AzimuthMeasurement Documentation',
      [u'WebGeoDataVore'], 1)
 ]
+
+rst_prolog = """
+.. role:: boltitalic
+  :class: boltitalic
+
+"""
