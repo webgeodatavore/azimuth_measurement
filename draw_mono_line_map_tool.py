@@ -69,7 +69,9 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
                 ]),
                 None
             )
-            if (self.startPoint is not None and self.endPoint is not None and self.startPoint != self.endPoint):
+            if ((self.startPoint is not None and
+                 self.endPoint is not None and
+                 self.startPoint != self.endPoint)):
                 self.azimuth_calcul.emit(self.startPoint, self.endPoint)
 
     def activate(self):

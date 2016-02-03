@@ -118,7 +118,8 @@ class AzimuthMeasurement:
 
         for act in self.iface.attributesToolBar().actions():
             if isinstance(act, QWidgetAction):
-                if act.defaultWidget().actions()[0] == self.iface.actionMeasure():
+                first_action = act.defaultWidget().actions()[0]
+                if first_action == self.iface.actionMeasure():
                     act.defaultWidget().addAction(
                         action
                     )
@@ -129,7 +130,8 @@ class AzimuthMeasurement:
         self.clear_canvas()
         for act in self.iface.attributesToolBar().actions():
             if isinstance(act, QWidgetAction):
-                if act.defaultWidget().actions()[0] == self.iface.actionMeasure():
+                first_action = act.defaultWidget().actions()[0]
+                if first_action == self.iface.actionMeasure():
                     act.defaultWidget().removeAction(
                         self.actions[0]
                     )
@@ -149,8 +151,8 @@ class AzimuthMeasurement:
     def populate_dock_widget(self, start_point, end_point):
         """Fill the fields in the dock"""
         result = self.calculate_azimuth(start_point, end_point)
-        if (result is not None and 'distance' in result and
-            'azimuth' in result):
+        if ((result is not None and 'distance' in result and
+             'azimuth' in result)):
             self.distance = result['distance']
             self.azimuth = result['azimuth']
             precision = "{0:.2f}"
