@@ -33,7 +33,7 @@ You just need to install it through the menu `Plugins` > `Manage and Install Plu
 Usage
 -----
 
-You just have to follow below demontration to understand how to use the plugin.
+You just have to follow below demonstration to understand how to use the plugin.
 
 .. image:: _static/images/qgis-azimuth-measurement.gif
     :align: center
