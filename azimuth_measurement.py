@@ -20,27 +20,32 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import (QSettings, Qt, QTranslator, qVersion,
-                          QCoreApplication)
+from __future__ import absolute_import
+from builtins import str
+from builtins import object
+from qgis.PyQt.QtCore import QSettings, Qt, QTranslator, qVersion, QCoreApplication
 
-from PyQt4.QtGui import QAction, QIcon, QWidgetAction
+from qgis.PyQt.QtWidgets import QAction, QWidgetAction
+from qgis.PyQt.QtGui import QIcon
 # Initialize Qt resources from file resources.py
-import resources
+# import resources
+from .resources import *
 
 from qgis.core import (QgsGeometry,
                        QgsCoordinateReferenceSystem,
-                       QgsCoordinateTransform)
+                       QgsCoordinateTransform,
+                       QgsCoordinateTransformContext)
 
-from draw_mono_line_map_tool import DrawMonoLineMapTool
+from .draw_mono_line_map_tool import DrawMonoLineMapTool
 
 # Import the code for the widget
-from azimuth_measurement_widget import AzimuthMeasurementWidget
+from .azimuth_measurement_widget import AzimuthMeasurementWidget
 import os.path
 
-from gc_geo import *
+from .gc_geo import *
 
 
-class AzimuthMeasurement:
+class AzimuthMeasurement(object):
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
@@ -179,6 +184,8 @@ class AzimuthMeasurement:
     def calculate_azimuth(self, start_point, end_point):
             sp = self.transform_to_epsg_4326(start_point)
             ep = self.transform_to_epsg_4326(end_point)
+            print('sp', sp)
+            print('ep', ep)
             calculus = great_distance(
                 start_longitude=sp.x(),
                 start_latitude=sp.y(),
@@ -188,11 +195,12 @@ class AzimuthMeasurement:
             return calculus
 
     def transform_to_epsg_4326(self, point):
-        if self.canvas.mapRenderer().destinationCrs().authid() != 'EPSG:4326':
-            crs_src = self.canvas.mapRenderer().destinationCrs()
+        if self.canvas.mapSettings().destinationCrs().authid() != 'EPSG:4326':
+            crs_src = self.canvas.mapSettings().destinationCrs()
             crs_dest = QgsCoordinateReferenceSystem(4326)
-            xform = QgsCoordinateTransform(crs_src, crs_dest)
-            return QgsGeometry.fromPoint(xform.transform(point)).asPoint()
+            xform = QgsCoordinateTransform(crs_src, crs_dest, QgsCoordinateTransformContext())
+            point.transform(xform)
+            return point
         else:
             return point
 

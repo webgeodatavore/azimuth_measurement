@@ -8,7 +8,7 @@
 
 [general]
 name=Azimuth Measurement
-qgisMinimumVersion=2.0
+qgisMinimumVersion=3.0
 description=Just measure Azimuth when you draw a line
 version=0.1
 author=WebGeoDataVore
