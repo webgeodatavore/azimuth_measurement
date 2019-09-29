@@ -14,9 +14,9 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
         s = QSettings()
         s.beginGroup('qgis')
         color = QColor(
-            int(s.value('default_measure_color_red')),
-            int(s.value('default_measure_color_green')),
-            int(s.value('default_measure_color_blue'))
+            int(s.value('default_measure_color_red', 222)),
+            int(s.value('default_measure_color_green', 17)),
+            int(s.value('default_measure_color_blue', 28))
         )
         s.endGroup()
         QgsMapToolEmitPoint.__init__(self, self.canvas)
