@@ -10,7 +10,7 @@
 name=Azimuth Measurement
 qgisMinimumVersion=3.0
 description=Just measure Azimuth when you draw a line
-version=0.2.1
+version=0.2.2
 author=WebGeoDataVore
 email=contact@webgeodatavore.com
 
