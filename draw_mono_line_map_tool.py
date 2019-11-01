@@ -49,8 +49,8 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
         if len(self.points) == 2:
             self.rubberBandDraw.setToGeometry(
                 QgsGeometry.fromPolyline([
-                    QgsPoint(self.points[0]),
-                    QgsPoint(self.points[1])
+                    QgsPoint(self.points[0].x(), self.points[0].y()),
+                    QgsPoint(self.points[1].x(), self.points[1].y())
                 ]),
                 None
             )
@@ -62,17 +62,14 @@ class DrawMonoLineMapTool(QgsMapToolEmitPoint):
             return
         self.endPoint = self.toMapCoordinates(e.pos())
         if len(self.points) > 0:
-            self.rubberBand.setToGeometry(
-                QgsGeometry.fromPolyline([
-                    QgsPoint(self.startPoint),
-                    QgsPoint(self.endPoint)
-                ]),
-                None
-            )
+            start = QgsPoint(self.startPoint.x(), self.startPoint.y())
+            end = QgsPoint(self.endPoint.x(), self.endPoint.y())
+            geom = QgsGeometry.fromPolyline([start, end])
+            self.rubberBand.setToGeometry(geom, None)
             if ((self.startPoint is not None and
                  self.endPoint is not None and
                  self.startPoint != self.endPoint)):
-                self.azimuth_calcul.emit(QgsPoint(self.startPoint), QgsPoint(self.endPoint))
+                self.azimuth_calcul.emit(start, end)
 
     def activate(self):
         self.reset()
